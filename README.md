@@ -86,3 +86,31 @@ If you encounter any issues or have suggestions for improvement, please:
 
 1. Submit an issue on GitHub
 2. Send email to yjh1670814592@outlook.com 
+
+## Development
+
+### Prerequisites
+- Java Development Kit (JDK) 17
+- IntelliJ IDEA (Community or Ultimate)
+
+### Environment Setup
+1. Install JDK 17
+2. Install IntelliJ IDEA
+3. Clone the repository
+
+### Building
+```bash
+./gradlew buildPlugin
+```
+
+### Testing
+```bash
+./gradlew test
+```
+
+### Contributing
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request 

@@ -73,6 +73,34 @@
 - PyCharm 2023.1 或更高版本
 - 启用 Python 插件
 
+## 开发
+
+### 前置要求
+- Java 开发工具包 (JDK) 17
+- IntelliJ IDEA (社区版或旗舰版)
+
+### 环境配置
+1. 安装 JDK 17
+2. 安装 IntelliJ IDEA
+3. 克隆仓库
+
+### 构建
+```bash
+./gradlew buildPlugin
+```
+
+### 测试
+```bash
+./gradlew test
+```
+
+### 贡献代码
+1. Fork 仓库
+2. 创建特性分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
+
 ## 注意事项
 
 0. **警告**：本项目尚未经过测试，使用风险自负。
