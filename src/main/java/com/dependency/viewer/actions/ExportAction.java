@@ -1,37 +1,40 @@
 package com.dependency.viewer.actions;
 
 import com.dependency.viewer.DependencyCanvas;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.DumbAware;
-import com.dependency.viewer.util.MessageBundle;
+import com.intellij.openapi.fileChooser.FileChooserFactory;
+import com.intellij.openapi.fileChooser.FileSaverDescriptor;
+import com.intellij.openapi.fileChooser.FileSaverDialog;
+import com.intellij.openapi.vfs.VirtualFileWrapper;
 import org.jetbrains.annotations.NotNull;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
 
-public class ExportAction extends AnAction implements DumbAware {
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+public class ExportAction extends AnAction {
     private final DependencyCanvas canvas;
 
     public ExportAction(DependencyCanvas canvas) {
-        super(MessageBundle.message("toolbar.export"),
-              MessageBundle.message("toolbar.export.description"),
-              null);
+        super("Export as Image", "Export dependency graph as PNG image", AllIcons.Actions.Export);
         this.canvas = canvas;
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle(MessageBundle.message("dialog.export.title"));
-        fileChooser.setFileFilter(new FileNameExtensionFilter("PNG Image", "png"));
+        FileSaverDescriptor descriptor = new FileSaverDescriptor("Export Graph", "Choose where to save the image", "png");
+        FileSaverDialog dialog = FileChooserFactory.getInstance().createSaveFileDialog(descriptor, e.getProject());
+        VirtualFileWrapper wrapper = dialog.save(null, "dependency-graph.png");
         
-        if (fileChooser.showSaveDialog(canvas) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            if (!file.getName().toLowerCase().endsWith(".png")) {
-                file = new File(file.getParentFile(), file.getName() + ".png");
+        if (wrapper != null) {
+            try {
+                BufferedImage image = canvas.createImage();
+                ImageIO.write(image, "PNG", wrapper.getFile());
+            } catch (IOException ex) {
+                // Handle error
             }
-            canvas.exportImage(file);
         }
     }
 } 

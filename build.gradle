@@ -13,6 +13,16 @@ repositories {
 }
 
 dependencies {
+    // IntelliJ Platform Dependencies
+    implementation 'org.jetbrains:annotations:24.0.1'
+    implementation 'com.intellij:forms_rt:7.0.3'
+    
+    // JGraphT for graph layout
+    implementation 'org.jgrapht:jgrapht-core:1.5.2'
+    
+    // Collections and Utils
+    implementation 'com.google.guava:guava:32.1.2-jre'
+    
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.mockito:mockito-core:5.3.1'
@@ -21,71 +31,27 @@ dependencies {
 intellij {
     version = '2023.3'
     type = 'PY'
-    plugins = ['python']
+    plugins = ['python', 'platform-images']
     updateSinceUntilBuild = true
     sameSinceUntilBuild = false
     downloadSources = true
 }
 
-patchPluginXml {
-    sinceBuild = "233"
-    untilBuild = "241.*"
-    changeNotes = """
-        V1.0.0:
-        <ul>
-            <li>Dependency Visualization: Display modules and dependencies in canvas form</li>
-            <li>Interactive Features: Module search, reference viewing, and code navigation</li>
-            <li>Multiple Layouts: Support hierarchical and force-directed layouts</li>
-            <li>Export Function: Export dependency graph as PNG image</li>
-            <li>View Controls: Zoom, pan, and fit to screen</li>
-        </ul>"""
-    description = """
-        A PyCharm plugin for visualizing Python module dependencies. It helps developers better understand project structure 
-        through graphical representation of dependencies between Python modules.<br><br>
-        
-        Main Features:<br>
-        <ul>
-            <li><b>Dependency Visualization</b>
-                <ul>
-                    <li>Display all Python modules in canvas form</li>
-                    <li>Show dependencies between modules with arrows</li>
-                    <li>Support two layout modes: hierarchical and force-directed</li>
-                </ul>
-            </li>
-            <li><b>Interactive Features</b>
-                <ul>
-                    <li>Click module to view its references</li>
-                    <li>Jump to code from reference list</li>
-                    <li>Real-time module search and highlight</li>
-                </ul>
-            </li>
-            <li><b>Layout Control</b>
-                <ul>
-                    <li>Switch between hierarchical and force-directed layouts</li>
-                    <li>Fit graph to screen size</li>
-                    <li>Zoom and pan support</li>
-                </ul>
-            </li>
-        </ul>
-        
-        <br>Quick Tips:<br>
-        <ul>
-            <li>Zoom: Ctrl + Mouse Wheel</li>
-            <li>Pan: Drag Canvas</li>
-            <li>View References: Click Module Node</li>
-            <li>Search: Type in Top Search Box</li>
-            <li>Refresh: Click Toolbar Refresh Button</li>
-        </ul>
-        
-        <br>Note: This plugin requires PyCharm 2023.1 or higher with Python plugin support.
-        """
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-test {
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+patchPluginXml {
+    sinceBuild = "233"
+    untilBuild = "241.*"
 } 

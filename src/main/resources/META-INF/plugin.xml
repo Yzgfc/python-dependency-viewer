@@ -1,21 +1,28 @@
 <idea-plugin>
     <id>com.dependency.viewer</id>
-    <name>%plugin.name%</name>
-    <vendor>Your Name</vendor>
-    <description>%plugin.description%</description>
+    <name>Python Dependency Viewer</name>
+    <vendor email="yjh1670814592@outlook.com" url="https://github.com/Yzgfc/python-dependency-viewer">Sakura</vendor>
+    <description><![CDATA[
+        A PyCharm plugin for visualizing Python module dependencies. It helps developers better understand project structure 
+        through graphical representation of dependencies between Python modules.<br><br>
+        
+        Main Features:<br>
+        <ul>
+            <li>Dependency Visualization</li>
+            <li>Interactive Features</li>
+            <li>Multiple Layout Options</li>
+            <li>Export Function</li>
+        </ul>
+    ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.python</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="%toolwindow.title%"
+        <toolWindow id="Python Dependency Viewer"
                     secondary="true"
                     icon="AllIcons.Toolwindows.ToolWindowStructure"
                     anchor="right"
                     factoryClass="com.dependency.viewer.DependencyViewerToolWindowFactory"/>
-        <applicationConfigurable
-                instance="com.dependency.viewer.settings.DependencyViewerSettings"
-                id="com.dependency.viewer.settings.DependencyViewerSettings"
-                displayName="%plugin.name%"/>
     </extensions>
 </idea-plugin> 

@@ -4,6 +4,7 @@ import com.dependency.viewer.ModuleNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.util.QualifiedName;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
 
@@ -45,7 +46,7 @@ public class PythonDependencyAnalyzer {
     
     private void analyzeFromImports(PyFile pyFile, ModuleNode moduleNode) {
         for (PyFromImportStatement fromImport : pyFile.getFromImports()) {
-            String sourceName = fromImport.getImportSourceQName();
+            String sourceName = fromImport.getImportSourceQName().toString();
             if (sourceName != null) {
                 moduleNode.addReference(fromImport.getTextOffset() + ":" + fromImport.getText());
             }

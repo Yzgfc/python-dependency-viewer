@@ -1,34 +1,60 @@
 package com.dependency.viewer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ModuleNode {
-    private final String moduleName;
-    private final String filePath;
-    private final List<ModuleNode> dependencies;
-    private final List<String> references;
-    
-    public ModuleNode(String moduleName, String filePath) {
-        this.moduleName = moduleName;
-        this.filePath = filePath;
-        this.dependencies = new ArrayList<>();
-        this.references = new ArrayList<>();
+    private final String name;
+    private final String path;
+    private final Set<String> references;
+    private double x;
+    private double y;
+
+    public ModuleNode(String name, String path) {
+        this.name = name;
+        this.path = path;
+        this.references = new HashSet<>();
     }
-    
-    public void addDependency(ModuleNode node) {
-        if (!dependencies.contains(node)) {
-            dependencies.add(node);
-        }
+
+    public String getName() {
+        return name;
     }
-    
+
+    public String getPath() {
+        return path;
+    }
+
     public void addReference(String reference) {
         references.add(reference);
     }
-    
-    // Getters
-    public String getModuleName() { return moduleName; }
-    public String getFilePath() { return filePath; }
-    public List<ModuleNode> getDependencies() { return dependencies; }
-    public List<String> getReferences() { return references; }
+
+    public Set<String> getReferences() {
+        return new HashSet<>(references);
+    }
+
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ModuleNode that = (ModuleNode) o;
+        return path.equals(that.path);
+    }
+
+    @Override
+    public int hashCode() {
+        return path.hashCode();
+    }
 } 

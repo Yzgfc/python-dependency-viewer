@@ -1,19 +1,16 @@
 package com.dependency.viewer.actions;
 
 import com.dependency.viewer.DependencyCanvas;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.DumbAware;
-import com.dependency.viewer.util.MessageBundle;
 import org.jetbrains.annotations.NotNull;
 
-public class FitToScreenAction extends AnAction implements DumbAware {
+public class FitToScreenAction extends AnAction {
     private final DependencyCanvas canvas;
 
     public FitToScreenAction(DependencyCanvas canvas) {
-        super(MessageBundle.message("toolbar.fit"),
-              MessageBundle.message("toolbar.fit.description"),
-              null);
+        super("Fit to Screen", "Fit graph to screen size", AllIcons.General.FitContent);
         this.canvas = canvas;
     }
 
