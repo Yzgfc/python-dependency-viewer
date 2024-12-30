@@ -18,7 +18,7 @@ public class ExportAction extends AnAction {
     private final DependencyCanvas canvas;
 
     public ExportAction(DependencyCanvas canvas) {
-        super("Export as Image", "Export dependency graph as PNG image", AllIcons.Actions.Export);
+        super("Export as Image", "Export dependency graph as PNG image", AllIcons.ToolbarDecorator.Export);
         this.canvas = canvas;
     }
 
@@ -26,7 +26,7 @@ public class ExportAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         FileSaverDescriptor descriptor = new FileSaverDescriptor("Export Graph", "Choose where to save the image", "png");
         FileSaverDialog dialog = FileChooserFactory.getInstance().createSaveFileDialog(descriptor, e.getProject());
-        VirtualFileWrapper wrapper = dialog.save(null, "dependency-graph.png");
+        VirtualFileWrapper wrapper = dialog.save((VirtualFile)null, "dependency-graph.png");
         
         if (wrapper != null) {
             try {

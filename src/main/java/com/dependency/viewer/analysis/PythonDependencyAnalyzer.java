@@ -33,12 +33,11 @@ public class PythonDependencyAnalyzer {
     }
     
     private void analyzeImports(PyFile pyFile, ModuleNode moduleNode) {
-        for (PyImportStatement importStatement : pyFile.getImportStatements()) {
+        for (PyImportStatement importStatement : pyFile.getImports()) {
             for (PyImportElement element : importStatement.getImportElements()) {
-                PyReferenceExpression reference = element.getImportReference();
-                if (reference != null) {
-                    String refText = reference.getText();
-                    moduleNode.addReference(importStatement.getTextOffset() + ":" + refText);
+                String importedName = element.getVisibleName();
+                if (importedName != null) {
+                    moduleNode.addReference(importedName);
                 }
             }
         }
@@ -46,9 +45,10 @@ public class PythonDependencyAnalyzer {
     
     private void analyzeFromImports(PyFile pyFile, ModuleNode moduleNode) {
         for (PyFromImportStatement fromImport : pyFile.getFromImports()) {
-            String sourceName = fromImport.getImportSourceQName().toString();
+            QualifiedName sourceQName = fromImport.getImportSourceQName();
+            String sourceName = sourceQName != null ? sourceQName.toString() : null;
             if (sourceName != null) {
-                moduleNode.addReference(fromImport.getTextOffset() + ":" + fromImport.getText());
+                moduleNode.addReference(sourceName);
             }
         }
     }

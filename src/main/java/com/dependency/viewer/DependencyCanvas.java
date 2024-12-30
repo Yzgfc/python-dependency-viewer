@@ -78,12 +78,15 @@ public class DependencyCanvas extends JPanel {
 
     public void highlightNodes(String searchText) {
         highlightedNodes.clear();
-        if (!searchText.isEmpty()) {
-            String lowercaseSearch = searchText.toLowerCase();
-            for (ModuleNode node : nodes) {
-                if (node.getName().toLowerCase().contains(lowercaseSearch)) {
-                    highlightedNodes.add(node);
-                }
+        if (searchText == null || searchText.trim().isEmpty()) {
+            repaint();
+            return;
+        }
+        
+        String searchLower = searchText.toLowerCase();
+        for (ModuleNode node : nodes) {
+            if (node.getName().toLowerCase().contains(searchLower)) {
+                highlightedNodes.add(node);
             }
         }
         repaint();
@@ -141,6 +144,7 @@ public class DependencyCanvas extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
+        // Apply transformations
         AffineTransform transform = new AffineTransform();
         transform.translate(translateX, translateY);
         transform.scale(scale, scale);
@@ -152,7 +156,13 @@ public class DependencyCanvas extends JPanel {
         for (ModuleNode node : nodes) {
             Point2D.Double from = new Point2D.Double(node.getX(), node.getY());
             for (String ref : node.getReferences()) {
-                // Draw edges logic here
+                for (ModuleNode target : nodes) {
+                    if (target.getName().equals(ref)) {
+                        Point2D.Double to = new Point2D.Double(target.getX(), target.getY());
+                        g2.drawLine((int)from.x, (int)from.y, (int)to.x, (int)to.y);
+                        break;
+                    }
+                }
             }
         }
         
@@ -174,6 +184,8 @@ public class DependencyCanvas extends JPanel {
     public BufferedImage createImage() {
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
+        g2.setColor(getBackground());
+        g2.fillRect(0, 0, getWidth(), getHeight());
         paint(g2);
         g2.dispose();
         return image;

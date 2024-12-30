@@ -11,7 +11,7 @@ public class ToggleLayoutAction extends AnAction {
     private boolean isHierarchical = true;
 
     public ToggleLayoutAction(DependencyCanvas canvas) {
-        super("Toggle Layout", "Switch between hierarchical and force-directed layouts", AllIcons.Actions.SwitchView);
+        super("Toggle Layout", "Switch between hierarchical and force-directed layouts", AllIcons.Actions.ChangeView);
         this.canvas = canvas;
     }
 

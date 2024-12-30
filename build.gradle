@@ -16,6 +16,8 @@ dependencies {
     // IntelliJ Platform Dependencies
     implementation 'org.jetbrains:annotations:24.0.1'
     implementation 'com.intellij:forms_rt:7.0.3'
+    implementation 'com.jetbrains.intellij.platform:core-ui'
+    implementation 'com.jetbrains.intellij.platform:analysis-impl'
     
     // JGraphT for graph layout
     implementation 'org.jgrapht:jgrapht-core:1.5.2'

@@ -40,7 +40,8 @@ public class DependencyViewerPanel extends JPanel {
 
     private void analyzeProject() {
         List<ModuleNode> nodes = new ArrayList<>();
-        VirtualFile projectDir = project.getBaseDir();
+        VirtualFile projectDir = project.getBasePath() != null ? 
+            VirtualFileManager.getInstance().findFileByUrl("file://" + project.getBasePath()) : null;
         
         if (projectDir != null) {
             analyzePythonFiles(projectDir, nodes);
@@ -50,10 +51,14 @@ public class DependencyViewerPanel extends JPanel {
     }
 
     private void analyzePythonFiles(VirtualFile dir, List<ModuleNode> nodes) {
+        if (!dir.isValid() || !dir.isDirectory()) {
+            return;
+        }
+        
         for (VirtualFile file : dir.getChildren()) {
             if (file.isDirectory()) {
                 analyzePythonFiles(file, nodes);
-            } else if ("py".equals(file.getExtension())) {
+            } else if (file.isValid() && "py".equals(file.getExtension())) {
                 ModuleNode node = analyzer.analyzeFile(file);
                 if (node != null) {
                     nodes.add(node);

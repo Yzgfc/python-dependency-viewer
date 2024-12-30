@@ -22,7 +22,7 @@ public class DependencyAnalyzer {
         moduleNodes.clear();
         
         // 获取项目中所有的 Python 文件
-        VirtualFile[] pythonFiles = FilenameIndex.getAllFilesByExt(project, "py", GlobalSearchScope.projectScope(project));
+        Collection<VirtualFile> pythonFiles = FilenameIndex.getFilesByExtension(project, "py", GlobalSearchScope.projectScope(project));
         
         for (VirtualFile file : pythonFiles) {
             PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
@@ -41,18 +41,17 @@ public class DependencyAnalyzer {
         
         // 分析导入语句
         for (PyFromImportStatement importStatement : pyFile.getFromImports()) {
-            String importedFrom = importStatement.getImportSourceQName();
+            String importedFrom = importStatement.getImportSourceQName().toString();
             if (importedFrom != null) {
                 ModuleNode dependency = moduleNodes.computeIfAbsent(
                     importedFrom,
                     k -> new ModuleNode(importedFrom, "")
                 );
-                moduleNode.addDependency(dependency);
-                moduleNode.addReference(importStatement.getTextOffset() + ":" + importStatement.getText());
+                moduleNode.addReference(dependency.getPath());
             }
         }
         
-        for (PyImportStatement importStatement : pyFile.getImportStatements()) {
+        for (PyImportStatement importStatement : pyFile.getImports()) {
             for (PyImportElement element : importStatement.getImportElements()) {
                 String importedName = element.getVisibleName();
                 if (importedName != null) {
@@ -60,8 +59,7 @@ public class DependencyAnalyzer {
                         importedName,
                         k -> new ModuleNode(importedName, "")
                     );
-                    moduleNode.addDependency(dependency);
-                    moduleNode.addReference(importStatement.getTextOffset() + ":" + importStatement.getText());
+                    moduleNode.addReference(dependency.getPath());
                 }
             }
         }
