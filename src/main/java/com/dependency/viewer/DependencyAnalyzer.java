@@ -41,7 +41,8 @@ public class DependencyAnalyzer {
         
         // 分析导入语句
         for (PyFromImportStatement importStatement : pyFile.getFromImports()) {
-            String importedFrom = importStatement.getImportSourceQName().toString();
+            QualifiedName sourceQName = importStatement.getImportSourceQName();
+            String importedFrom = sourceQName != null ? sourceQName.toString() : null;
             if (importedFrom != null) {
                 ModuleNode dependency = moduleNodes.computeIfAbsent(
                     importedFrom,
@@ -51,7 +52,7 @@ public class DependencyAnalyzer {
             }
         }
         
-        for (PyImportStatement importStatement : pyFile.getImportStatements()) {
+        for (PyImportStatement importStatement : pyFile.getImports()) {
             for (PyImportElement element : importStatement.getImportElements()) {
                 String importedName = element.getVisibleName();
                 if (importedName != null) {
