@@ -3,10 +3,19 @@ package com.dependency.viewer.layout;
 import com.dependency.viewer.ModuleNode;
 import java.awt.Rectangle;
 import java.util.*;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
+import java.util.Collection;
 
 public class GraphLayoutManager {
+    private final Collection<ModuleNode> nodes;
     private static final int LAYER_VERTICAL_GAP = 100;
     private static final int NODE_HORIZONTAL_GAP = 50;
+    
+    public GraphLayoutManager(Collection<ModuleNode> nodes) {
+        this.nodes = nodes;
+    }
     
     public Map<ModuleNode, Rectangle> layout(Collection<ModuleNode> nodes, int width, int height) {
         Map<ModuleNode, Rectangle> positions = new HashMap<>();
@@ -44,9 +53,14 @@ public class GraphLayoutManager {
         visited.add(node);
         layers.put(node, Math.max(layer, layers.getOrDefault(node, 0)));
         
-        for (ModuleNode dep : node.getDependencies()) {
-            if (!visited.contains(dep)) {
-                assignLayer(dep, layer + 1, layers, visited);
+        for (String ref : node.getReferences()) {
+            for (ModuleNode dep : nodes) {
+                if (dep.getName().equals(ref)) {
+                    if (!visited.contains(dep)) {
+                        assignLayer(dep, layer + 1, layers, visited);
+                    }
+                    break;
+                }
             }
         }
     }

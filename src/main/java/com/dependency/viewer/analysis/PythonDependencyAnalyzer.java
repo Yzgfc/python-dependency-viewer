@@ -33,7 +33,7 @@ public class PythonDependencyAnalyzer {
     }
     
     private void analyzeImports(PyFile pyFile, ModuleNode moduleNode) {
-        for (PyImportStatement importStatement : pyFile.getImportStatements()) {
+        for (PyImportStatement importStatement : pyFile.getImports()) {
             for (PyImportElement element : importStatement.getImportElements()) {
                 String importedName = element.getVisibleName();
                 if (importedName != null) {
