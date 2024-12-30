@@ -1,0 +1,21 @@
+<idea-plugin>
+    <id>com.dependency.viewer</id>
+    <name>%plugin.name%</name>
+    <vendor>Your Name</vendor>
+    <description>%plugin.description%</description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.python</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="%toolwindow.title%"
+                    secondary="true"
+                    icon="AllIcons.Toolwindows.ToolWindowStructure"
+                    anchor="right"
+                    factoryClass="com.dependency.viewer.DependencyViewerToolWindowFactory"/>
+        <applicationConfigurable
+                instance="com.dependency.viewer.settings.DependencyViewerSettings"
+                id="com.dependency.viewer.settings.DependencyViewerSettings"
+                displayName="%plugin.name%"/>
+    </extensions>
+</idea-plugin> 
