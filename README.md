@@ -11,6 +11,13 @@ A PyCharm plugin for visualizing Python module dependencies. It helps developers
 
 [中文文档](README_zh.md)
 
+## Important Notes
+
+0. **WARNING**: This project has not been tested yet. Use at your own risk.
+1. Initial dependency analysis may take time for large projects
+2. Regularly refresh dependency view to reflect latest project structure
+3. Force-directed layout may need multiple adjustments for best results with many nodes
+
 ## Features
 
 ### Dependency Visualization
@@ -72,13 +79,6 @@ A PyCharm plugin for visualizing Python module dependencies. It helps developers
 ## Requirements
 - PyCharm 2023.1 or higher
 - Python plugin enabled
-
-## Notes
-
-0. **WARNING**: This project has not been tested yet. Use at your own risk.
-1. Initial dependency analysis may take time for large projects
-2. Regularly refresh dependency view to reflect latest project structure
-3. Force-directed layout may need multiple adjustments for best results with many nodes
 
 ## Feedback
 
