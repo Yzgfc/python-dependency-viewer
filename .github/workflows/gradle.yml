@@ -40,8 +40,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: plugin-artifact
-        path: build/distributions/*.zip
-        retention-days: 7
+        path: build/distributions/dependency-viewer-${{ github.event.release.tag_name }}.zip
+        retention-days: 0
 
     - name: Upload Release Asset
       if: github.event_name == 'release'
@@ -50,6 +50,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: build/distributions/*.zip
+        asset_path: build/distributions/dependency-viewer-${{ github.event.release.tag_name }}.zip
         asset_name: dependency-viewer-${{ github.event.release.tag_name }}.zip
         asset_content_type: application/zip 
