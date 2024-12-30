@@ -51,7 +51,7 @@ public class DependencyAnalyzer {
             }
         }
         
-        for (PyImportStatement importStatement : pyFile.getImports()) {
+        for (PyImportStatement importStatement : pyFile.getImportStatements()) {
             for (PyImportElement element : importStatement.getImportElements()) {
                 String importedName = element.getVisibleName();
                 if (importedName != null) {
