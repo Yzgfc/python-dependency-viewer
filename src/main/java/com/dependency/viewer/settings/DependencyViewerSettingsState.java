@@ -7,6 +7,7 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.application.ApplicationManager;
 
 @State(
     name = "DependencyViewerSettings",
@@ -16,7 +17,7 @@ public class DependencyViewerSettingsState implements PersistentStateComponent<D
     private String language = "English";
 
     public static DependencyViewerSettingsState getInstance() {
-        return ServiceManager.getService(DependencyViewerSettingsState.class);
+        return ApplicationManager.getApplication().getService(DependencyViewerSettingsState.class);
     }
 
     @Nullable

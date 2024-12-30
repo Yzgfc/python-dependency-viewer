@@ -8,6 +8,7 @@ import com.intellij.openapi.fileChooser.FileChooserFactory;
 import com.intellij.openapi.fileChooser.FileSaverDescriptor;
 import com.intellij.openapi.fileChooser.FileSaverDialog;
 import com.intellij.openapi.vfs.VirtualFileWrapper;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;

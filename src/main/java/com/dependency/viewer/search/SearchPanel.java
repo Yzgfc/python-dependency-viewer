@@ -46,7 +46,7 @@ public class SearchPanel extends JPanel {
         
         private void updateSearch() {
             String searchText = searchField.getText().toLowerCase();
-            canvas.highlightModules(searchText);
+            canvas.highlightNodes(searchText);
         }
     }
 } 

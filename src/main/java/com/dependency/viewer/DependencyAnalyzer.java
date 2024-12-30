@@ -22,7 +22,7 @@ public class DependencyAnalyzer {
         moduleNodes.clear();
         
         // 获取项目中所有的 Python 文件
-        Collection<VirtualFile> pythonFiles = FilenameIndex.getFilesByExtension(project, "py", GlobalSearchScope.projectScope(project));
+        Collection<VirtualFile> pythonFiles = FilenameIndex.getAllFilesByExt(project, "py", GlobalSearchScope.projectScope(project));
         
         for (VirtualFile file : pythonFiles) {
             PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
@@ -51,7 +51,7 @@ public class DependencyAnalyzer {
             }
         }
         
-        for (PyImportStatement importStatement : pyFile.getImports()) {
+        for (PyImportStatement importStatement : pyFile.getImportStatements()) {
             for (PyImportElement element : importStatement.getImportElements()) {
                 String importedName = element.getVisibleName();
                 if (importedName != null) {

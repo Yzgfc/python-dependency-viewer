@@ -72,4 +72,17 @@ public class GraphLayoutManager {
             x += nodeWidth + NODE_HORIZONTAL_GAP;
         }
     }
+    
+    private void addEdges(Graph<ModuleNode, DefaultEdge> graph) {
+        for (ModuleNode node : nodes) {
+            for (String ref : node.getReferences()) {
+                for (ModuleNode target : nodes) {
+                    if (target.getName().equals(ref)) {
+                        graph.addEdge(node, target);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 } 
